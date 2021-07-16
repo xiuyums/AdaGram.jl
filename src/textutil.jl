@@ -114,6 +114,7 @@ function read_words(f::IOStream, start_pos::Int64, end_pos::Int64,
   words = Stateful(looped_word_iterator(f, start_pos, end_pos))
   i = 1
   while i <= length(doc) && words_read[1] < total_words && !isempty(words)
+    word = ""
     try
       word = popfirst!(words)
     catch e

@@ -20,7 +20,7 @@ end
 
 @resumable function looped_word_iterator(f::IO, start_pos::Int64,
   end_pos::Int64) :: AbstractString
-  while true
+  while !eof(f)
     w = readuntil(f, ' ')
     if length(w) < 1 break end
     if !adagram_isblank(w)
@@ -113,8 +113,13 @@ function read_words(f::IOStream, start_pos::Int64, end_pos::Int64,
     words_read::DenseArray{Int64}, total_words::Float64)
   words = Stateful(looped_word_iterator(f, start_pos, end_pos))
   i = 1
-  while i <= length(doc) && words_read[1] < total_words
-    word = popfirst!(words)
+  while i <= length(doc) && words_read[1] < total_words && !isempty(words)
+    try
+      word = popfirst!(words)
+    catch e
+      println("EOF exception")
+      break;
+    end  
     id = get(dict.word2id, word, -1)
     if id == -1
       continue

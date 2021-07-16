@@ -20,7 +20,7 @@ end
 
 @resumable function looped_word_iterator(f::IO, start_pos::Int64,
   end_pos::Int64) :: AbstractString
-  while true
+  while !eof(f)
     w = readuntil(f, ' ')
     if length(w) < 1 break end
     if !adagram_isblank(w)

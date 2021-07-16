@@ -119,7 +119,7 @@ function read_words(f::IOStream, start_pos::Int64, end_pos::Int64,
       word = popfirst!(words)
     catch e
       println("EOF exception")
-      break;
+      break
     end  
     id = get(dict.word2id, word, -1)
     if id == -1

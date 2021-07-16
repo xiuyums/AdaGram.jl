@@ -136,6 +136,8 @@ function inplace_train_vectors!(vm::VectorModel, dict::Dictionary, path::Abstrac
 
 			println("$(length(doc)) words read, $(position(file))/$end_pos")
 			if length(doc) == 0
+				println("0 words read,save the mode")
+				save_model("vector-model-bk.txt", vm, dict)
 				break
 			end
 
